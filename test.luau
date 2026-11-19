@@ -580,7 +580,7 @@ do
         local secondCallback = (type(secondConfig) == "table" and (secondConfig.callback or secondConfig.Callback)) or info.button2Callback or info.Button2Callback or info.rightCallback or info.RightCallback or secondButton.callback or secondButton[2] or function() end
         local duration = tonumber(info.duration or info.Duration or 0) or 0
         local accent = info.accent or info.Accent or info.color or info.Color or theme.accent
-        local width, height = 340, 126
+        local width, height = 360, 142
         local toast = {
             drawings = {},
             created = tick(),
@@ -602,31 +602,19 @@ do
             Size = Vector2.new(width, height),
             Color = theme.outline,
             Transparency = 0,
-            ZIndex = 60
+            ZIndex = 70
         })
         toast.inline = create("Frame", {
             Size = Vector2.new(width - 2, height - 2),
             Color = accent,
             Transparency = 0,
-            ZIndex = 60
+            ZIndex = 70
         })
         toast.background = create("Frame", {
             Size = Vector2.new(width - 4, height - 4),
             Color = theme.darkcontrast,
             Transparency = 0,
-            ZIndex = 60
-        })
-        toast.header = create("Frame", {
-            Size = Vector2.new(width - 6, 24),
-            Color = theme.lightcontrast,
-            Transparency = 0,
-            ZIndex = 61
-        })
-        toast.accentbar = create("Frame", {
-            Size = Vector2.new(width - 6, 2),
-            Color = accent,
-            Transparency = 0,
-            ZIndex = 62
+            ZIndex = 70
         })
         toast.title = create("TextLabel", {
             Text = title,
@@ -635,7 +623,7 @@ do
             Color = theme.textcolor,
             OutlineColor = theme.textborder,
             Transparency = 0,
-            ZIndex = 62
+            ZIndex = 71
         })
         toast.message = create("TextLabel", {
             Text = text,
@@ -644,28 +632,16 @@ do
             Color = theme.textdark,
             OutlineColor = theme.textborder,
             Transparency = 0,
-            ZIndex = 61
+            ZIndex = 71
         })
 
         local function createButton(label)
             local button = {
-                outline = create("Frame", {
-                    Size = Vector2.new(156, 23),
-                    Color = theme.outline,
-                    Transparency = 0,
-                    ZIndex = 61
-                }),
-                inline = create("Frame", {
-                    Size = Vector2.new(154, 21),
-                    Color = accent,
-                    Transparency = 0,
-                    ZIndex = 61
-                }),
                 frame = create("Frame", {
-                    Size = Vector2.new(152, 19),
+                    Size = Vector2.new(164, 24),
                     Color = theme.lightcontrast,
                     Transparency = 0,
-                    ZIndex = 62
+                    ZIndex = 71
                 })
             }
             button.text = create("TextLabel", {
@@ -676,7 +652,7 @@ do
                 OutlineColor = theme.textborder,
                 Center = true,
                 Transparency = 0,
-                ZIndex = 63
+                ZIndex = 72
             })
             return button
         end
@@ -717,7 +693,7 @@ do
         if not library.toastConnection then
             library.toastConnection = utility:Connection(rs.RenderStepped, function(delta)
                 local viewport = utility:GetScreenSize()
-                local top = (viewport.Y - (#library.toasts * 126 + ((#library.toasts - 1) * 8))) / 2
+                local top = (viewport.Y - (#library.toasts * 142 + ((#library.toasts - 1) * 10))) / 2
 
                 for index = #library.toasts, 1, -1 do
                     local current = library.toasts[index]
@@ -732,22 +708,16 @@ do
                     end
 
                     local x = (viewport.X - current.width) / 2
-                    local y = top + ((index - 1) * 134)
+                    local y = top + ((index - 1) * 152)
                     current.outline.Position = Vector2.new(x, y)
                     current.inline.Position = Vector2.new(x + 1, y + 1)
                     current.background.Position = Vector2.new(x + 2, y + 2)
-                    current.header.Position = Vector2.new(x + 3, y + 3)
-                    current.accentbar.Position = Vector2.new(x + 3, y + 3)
-                    current.title.Position = Vector2.new(x + 10, y + 8)
-                    current.message.Position = Vector2.new(x + 10, y + 35)
-                    current.first.outline.Position = Vector2.new(x + 10, y + 92)
-                    current.first.inline.Position = Vector2.new(x + 11, y + 93)
-                    current.first.frame.Position = Vector2.new(x + 12, y + 94)
-                    current.first.text.Position = Vector2.new(x + 12 + (current.first.frame.Size.X / 2), y + 96)
-                    current.second.outline.Position = Vector2.new(x + 174, y + 92)
-                    current.second.inline.Position = Vector2.new(x + 175, y + 93)
-                    current.second.frame.Position = Vector2.new(x + 176, y + 94)
-                    current.second.text.Position = Vector2.new(x + 176 + (current.second.frame.Size.X / 2), y + 96)
+                    current.title.Position = Vector2.new(x + 12, y + 12)
+                    current.message.Position = Vector2.new(x + 12, y + 38)
+                    current.first.frame.Position = Vector2.new(x + 10, y + 104)
+                    current.first.text.Position = Vector2.new(x + 10 + (current.first.frame.Size.X / 2), y + 108)
+                    current.second.frame.Position = Vector2.new(x + 186, y + 104)
+                    current.second.text.Position = Vector2.new(x + 186 + (current.second.frame.Size.X / 2), y + 108)
                     setTransparency(current, current.alpha)
 
                     if current.alpha <= 0 and current.state == "out" then
@@ -1039,7 +1009,7 @@ do
                 Color = theme.cursoroutline,
                 Thickness = 2.5,
                 Filled = false,
-                ZIndex = 100,
+                ZIndex = 65,
                 Hidden = true
             });window.cursor["cursor"] = cursor
             --
@@ -1051,7 +1021,7 @@ do
                 Color = theme.accent,
                 Filled = true,
                 Thickness = 0,
-                ZIndex = 100,
+                ZIndex = 65,
                 Hidden = true
             });window.cursor["cursor_inline"] = cursor_inline
             --
@@ -2103,7 +2073,7 @@ do
                 Color = theme.cursoroutline,
                 Thickness = 2.5,
                 Filled = false,
-                ZIndex = 100,
+                ZIndex = 65,
                 Hidden = true
             });window.cursor["cursor"] = cursor
             --
@@ -2115,7 +2085,7 @@ do
                 Color = theme.accent,
                 Filled = true,
                 Thickness = 0,
-                ZIndex = 100,
+                ZIndex = 65,
                 Hidden = true
             });window.cursor["cursor_inline"] = cursor_inline
             --
@@ -7123,106 +7093,4 @@ do
     end
 end
 --
--- // Complete API demo
-local demo = library:New({
-    name = "Atlanta Complete Demo",
-    size = Vector2.new(620, 590),
-    accent = Color3.fromRGB(55, 175, 225),
-    PageAmmount = 4,
-    style = 1
-})
-
-local controls = demo:Page({name = "Controls"})
-local basic = controls:Section({name = "Basic Controls", side = "left"})
-basic:Label({name = "All standard controls are shown here."})
-basic:Toggle({
-    name = "Enabled",
-    def = true,
-    callback = function(value)
-        library:Notification({title = "Toggle", text = value and "Enabled" or "Disabled"})
-    end
-})
-basic:Slider({name = "Power", min = 0, max = 100, def = 50, suffix = "%"})
-basic:Button({name = "Button", callback = function() library:Notification("Button clicked") end})
-basic:TextBox({name = "Text Box", placeholder = "Type here..."})
-basic:ButtonHolder({
-    buttons = {
-        {"Left Button", function() library:Notification("Left button clicked") end},
-        {"Right Button", function() library:Notification("Right button clicked") end}
-    }
-})
-
-local selectors = controls:Section({name = "Selectors", side = "right"})
-selectors:Dropdown({name = "Dropdown", options = {"Dog", "Cat", "Rabbit"}, def = "Dog"})
-selectors:Multibox({name = "Multibox", options = {"Apple", "Carrot", "Fish"}, def = {"Apple"}})
-selectors:Keybind({name = "Keybind", def = Enum.KeyCode.F})
-selectors:Colorpicker({name = "Colorpicker", def = Color3.fromRGB(55, 175, 225)})
-selectors:List({
-    options = {"First", "Second", "Third", "Fourth", "Fifth", "Sixth"},
-    max = 4,
-    def = 1
-})
-
-local advanced = demo:Page({name = "Advanced"})
-local multiA, multiB = advanced:MultiSection({
-    sections = {"Multi A", "Multi B"},
-    side = "left",
-    size = 260,
-    callback = function() end
-})
-multiA:Label({name = "First MultiSection tab"})
-multiA:Toggle({name = "Multi toggle", def = true})
-multiA:Button({name = "Multi button", callback = function() library:Notification("Multi A clicked") end})
-multiB:Label({name = "Second MultiSection tab"})
-multiB:Slider({name = "Multi slider", min = 0, max = 10, def = 5})
-multiB:Dropdown({options = {"One", "Two", "Three"}, def = "One"})
-
-local advancedRight = advanced:Section({name = "Extra Section", side = "right"})
-advancedRight:Label({name = "Section and MultiSection containers."})
-advancedRight:TextBox({name = "Another Text Box", def = "Demo"})
-advancedRight:Button({name = "Show Toast", callback = function()
-    library:Toast({
-        title = "Toast demo",
-        text = "Choose one of the two callbacks.",
-        button1 = {name = "Accept", callback = function() library:Notification("Accepted") end},
-        button2 = {name = "Decline", callback = function() library:Notification("Declined") end}
-    })
-end})
-
-local players = demo:Page({name = "Players"})
-players:PlayerList()
-
-local actions = demo:Page({name = "Actions"})
-local actionSection = actions:Section({name = "Library Actions", side = "left"})
-actionSection:Label({name = "Notifications, toasts, and lifecycle actions."})
-actionSection:Button({name = "Notification", callback = function()
-    library:Notification({title = "Notification", text = "This is a notification."})
-end})
-actionSection:Button({name = "Toast", callback = function()
-    library:Toast({
-        title = "Are you sure?",
-        text = "This toast has two independent callbacks.",
-        buttons = {
-            {"Yes", function() library:Notification("You chose yes") end},
-            {"No", function() library:Notification("You chose no") end}
-        }
-    })
-end})
-actionSection:Button({name = "Unload Demo", callback = function()
-    task.spawn(function()
-        task.wait()
-        demo:Unload()
-    end)
-end})
-
-local actionRight = actions:Section({name = "Config Example", side = "right"})
-actionRight:Label({name = "Pointers can be used for config data."})
-actionRight:Toggle({name = "Config Toggle", pointer = "config_toggle"})
-actionRight:Slider({name = "Config Value", pointer = "config_value", min = 0, max = 100, def = 25})
-actionRight:Button({name = "Show Config", callback = function()
-    library:Notification("Config controls are registered")
-end})
-
-demo:Initialize()
-
 return library, utility, library.pointers, theme
